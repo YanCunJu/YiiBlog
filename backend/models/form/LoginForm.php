@@ -1,7 +1,7 @@
 <?php
-namespace frontend\models\form;
+namespace backend\models\form;
 
-use frontend\models\db\User;
+use backend\models\db\Admin;
 use Yii;
 use yii\base\Model;
 
@@ -48,7 +48,7 @@ class LoginForm extends Model
         if (!$this->hasErrors()) {
             $user = $this->getUser();
             if (!$user || !$user->validatePassword($this->password)) {
-                $this->addError($attribute, '用户名或密码不正确');
+                $this->addError($attribute, 'Incorrect username or password.');
             }
         }
     }
@@ -75,7 +75,7 @@ class LoginForm extends Model
     protected function getUser()
     {
         if ($this->_user === null) {
-            $this->_user = User::findByUsername($this->username);
+            $this->_user = Admin::findByUsername($this->username);
         }
 
         return $this->_user;

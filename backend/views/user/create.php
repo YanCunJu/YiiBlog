@@ -4,13 +4,13 @@ use yii\helpers\Html;
 
 
 /* @var $this yii\web\View */
-/* @var $model common\models\db\Tag */
+/* @var $model backend\models\db\User */
 
-$this->title = 'Create Tag';
-$this->params['breadcrumbs'][] = ['label' => 'Tags', 'url' => ['index']];
+$this->title = 'Create User';
+$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="tag-create">
+<div class="user-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

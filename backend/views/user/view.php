@@ -4,13 +4,13 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model backend\models\db\Admin */
+/* @var $model backend\models\db\User */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Admins', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="admin-view">
+<div class="user-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
 

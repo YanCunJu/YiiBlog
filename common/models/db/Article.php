@@ -50,12 +50,12 @@ class Article extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
-            'content' => 'Content',
-            'tags' => 'Tags',
-            'status' => 'Status',
-            'create_time' => 'Create Time',
-            'update_time' => 'Update Time',
+            'title' => '标题',
+            'content' => '内容',
+            'tags' => '标签',
+            'status' => '状态',
+            'create_time' => '创建时间',
+            'update_time' => '更新时间',
             'author_id' => 'Author ID',
         ];
     }
