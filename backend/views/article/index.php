@@ -1,5 +1,6 @@
 <?php
 
+use common\models\db\Article;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -25,14 +26,20 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             //['class' => 'yii\grid\SerialColumn'],
 
-            'id',
+            //'id',
+            ['attribute'=>'id','contentOptions'=>['width'=>'30px']],
             'title',
+            ['attribute'=>'authorName','label'=>'作者','value'=>'author.username'],
             //'content:ntext',
             'tags',
-            'status',
-            'create_time:datetime',
-            //'update_time:datetime',
-            //'author_id',
+            [
+                'attribute'=>'status',
+                'value'=>function($model){return $model->getStatus();},
+                'filter'=>Article::statuses(),
+            ],
+            //'create_time:datetime',
+            'update_time:datetime',
+
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

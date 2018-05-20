@@ -4,6 +4,7 @@ namespace backend\models\db;
 
 use common\models\db\Article;
 use Yii;
+use yii\helpers\ArrayHelper;
 use yii\web\IdentityInterface;
 
 /**
@@ -202,4 +203,5 @@ class Admin extends \yii\db\ActiveRecord implements IdentityInterface
     {
         return $this->hasMany(Article::className(), ['author_id' => 'id']);
     }
+
 }

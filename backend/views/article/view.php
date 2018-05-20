@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\db\Article */
 
 $this->title = $model->title;
-$this->params['breadcrumbs'][] = ['label' => 'Articles', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '文章管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="article-view">
@@ -32,11 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'title',
             'content:ntext',
             'tags',
-            'status',
+            ['attribute'=>'status','value'=>$model->getStatus()],
             'create_time:datetime',
             'update_time:datetime',
-            'author_id',
+            ['attribute'=>'author_id','value'=>$model->author->username]
         ],
+        'template'=>'<tr><th style="width:120px;">{label}</th><td>{value}</td></tr>',
+        'options'=>['class'=>'table table-striped table-boardered detail-view']
     ]) ?>
 
 </div>

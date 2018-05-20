@@ -12,6 +12,12 @@ use common\models\db\Article;
  */
 class ArticleSearch extends Article
 {
+
+    public function attributes()
+    {
+        return array_merge(parent::attributes(),['authorName']);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -19,7 +25,7 @@ class ArticleSearch extends Article
     {
         return [
             [['id', 'status', 'create_time', 'update_time', 'author_id'], 'integer'],
-            [['title', 'content', 'tags'], 'safe'],
+            [['title', 'content', 'tags','authorName'], 'safe'],
         ];
     }
 
@@ -47,6 +53,7 @@ class ArticleSearch extends Article
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination'=>['pageSize'=>3],
         ]);
 
         $this->load($params);
@@ -60,7 +67,7 @@ class ArticleSearch extends Article
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'status' => $this->status,
+            'article.status' => $this->status,
             'create_time' => $this->create_time,
             'update_time' => $this->update_time,
             'author_id' => $this->author_id,
@@ -69,6 +76,15 @@ class ArticleSearch extends Article
         $query->andFilterWhere(['like', 'title', $this->title])
             ->andFilterWhere(['like', 'content', $this->content])
             ->andFilterWhere(['like', 'tags', $this->tags]);
+
+        $query->join('INNER JOIN','admin','admin.id = article.author_id');
+        $query->andFilterWhere(['like','admin.username',$this->authorName]);
+
+        $dataProvider->sort->attributes['authorName'] =
+        [
+            'asc' => ['admin.username'=>SORT_ASC],
+            'desc'=> ['admin.username'=>SORT_DESC]
+        ];
 
         return $dataProvider;
     }

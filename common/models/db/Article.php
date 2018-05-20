@@ -4,6 +4,7 @@ namespace common\models\db;
 
 use backend\models\db\Admin;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "article".
@@ -56,8 +57,21 @@ class Article extends \yii\db\ActiveRecord
             'status' => '状态',
             'create_time' => '创建时间',
             'update_time' => '更新时间',
-            'author_id' => 'Author ID',
+            'author_id' => '作者',
         ];
+    }
+
+    public static function statuses()
+    {
+        return [
+            '0' => '未发布',
+            '1' => '已发布'
+        ];
+    }
+
+    public function getStatus()
+    {
+        return self::statuses()[$this->status];
     }
 
     /**
@@ -66,5 +80,25 @@ class Article extends \yii\db\ActiveRecord
     public function getAuthor()
     {
         return $this->hasOne(Admin::className(), ['id' => 'author_id']);
+    }
+
+    public function getAuthors()
+    {
+        return ArrayHelper::map(Admin::find()->all(),'id','username');
+    }
+
+    public function beforeSave($insert)
+    {
+        if(parent::beforeSave($insert)) {
+            if($insert) {
+                $this->create_time = time();
+                $this->update_time = time();
+            } else {
+                $this->update_time = time();
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 }
