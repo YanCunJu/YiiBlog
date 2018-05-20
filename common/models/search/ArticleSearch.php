@@ -66,7 +66,7 @@ class ArticleSearch extends Article
 
         // grid filtering conditions
         $query->andFilterWhere([
-            'id' => $this->id,
+            'article.id' => $this->id,
             'article.status' => $this->status,
             'create_time' => $this->create_time,
             'update_time' => $this->update_time,

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model common\models\db\Comment */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Comments', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => '评论管理', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="comment-view">
@@ -15,11 +15,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
+        <?= Html::a('编辑', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('删除', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => '你确定删除这条评论吗？',
                 'method' => 'post',
             ],
         ]) ?>
@@ -30,11 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'content',
-            'status',
-            'user_id',
+            ['attribute'=>'status','value'=>$model->getStatus()],
+            'create_time:datetime',
+            ['attribute'=>'user_id','value'=>$model->user->username],
             'email:email',
             'url:url',
-            'article_id',
+            ['attribute'=>'author_id','value'=>$model->article->title],
         ],
     ]) ?>
 
