@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use backend\models\form\ResetPasswordForm;
+use backend\models\form\SignupForm;
 use Yii;
 use backend\models\db\Admin;
 use backend\models\search\AdminSearch;
@@ -64,16 +66,35 @@ class AdminController extends Controller
      */
     public function actionCreate()
     {
-        $model = new Admin();
+        $model = new SignUpForm();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+            if($user = $model->signup()) {
+                return $this->redirect(['view', 'id' => $user->id]);
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
     }
+
+    public function actionResetpwd($id)
+    {
+        $model = new ResetPasswordForm();
+
+        if ($model->load(Yii::$app->request->post())) {
+            if($model->resetPassword($id)) {
+                return $this->redirect(['index']);
+            }
+        }
+
+        return $this->render('resetpwd', [
+            'model' => $model,
+        ]);
+    }
+
+
 
     /**
      * Updates an existing Admin model.
