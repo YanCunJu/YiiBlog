@@ -39,7 +39,8 @@ return [
         ],
         'formatter' => [
             'datetimeFormat' => 'php:Y-m-d H:i:s'
-        ]
+        ],
+
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,
