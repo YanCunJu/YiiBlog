@@ -12,6 +12,7 @@ use backend\models\form\LoginForm;
  */
 class SiteController extends Controller
 {
+
     /**
      * {@inheritdoc}
      */
@@ -19,23 +20,18 @@ class SiteController extends Controller
     {
         return [
             'access' => [
-                'class' => AccessControl::className(),
-                'rules' => [
+                'class'=>AccessControl::className(),
+                'rules'=>[
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login','error'],
                         'allow' => true,
+                        'roles'=>['?'],
                     ],
                     [
-                        'actions' => ['logout', 'index'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
-                ],
-            ],
-            'verbs' => [
-                'class' => VerbFilter::className(),
-                'actions' => [
-                    'logout' => ['post'],
+                        'actions' => ['logout','index'],
+                        'allow'=>true,
+                        'roles'=>['@']
+                    ]
                 ],
             ],
         ];

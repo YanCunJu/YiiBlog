@@ -14,7 +14,9 @@ use Yii;
  * @property int $user_id
  * @property string $email
  * @property string $url
+ * @property string $create_time
  * @property int $article_id
+ * @property int $remind 0表示未提醒，1表示已提醒
  */
 class Comment extends \yii\db\ActiveRecord
 {
@@ -32,9 +34,10 @@ class Comment extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['content', 'user_id', 'article_id','create_time'], 'required'],
-            [['status', 'user_id', 'article_id','create_time'], 'integer'],
+            [['content', 'user_id', 'article_id'], 'required'],
+            [['status', 'user_id', 'article_id', 'remind'], 'integer'],
             [['content', 'email', 'url'], 'string', 'max' => 255],
+            [['create_time'], 'string', 'max' => 32],
         ];
     }
 
@@ -52,6 +55,7 @@ class Comment extends \yii\db\ActiveRecord
             'url' => 'Url',
             'create_time'=>'创建时间',
             'article_id' => '文章',
+            'remind' => 'Remind',
         ];
     }
 
@@ -94,5 +98,10 @@ class Comment extends \yii\db\ActiveRecord
     public static function getPengdingCommentCount()
     {
         return Comment::find()->where(['status'=>0])->count();
+    }
+
+    public static function findRecentComments($limit = 10)
+    {
+        return Comment::find()->where(['status'=>1])->orderBy('create_time desc')->limit($limit)->all();
     }
 }
